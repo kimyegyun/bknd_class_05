@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:replace="~{fragments :: head_fragment}"></th:block>
+    <body>
+        <th:block th:replace="~{fragments :: nav_fragment}"></th:block>
+        <th:block th:replace="~{fragments :: header_fragment}"></th:block>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                            <form id="contactForm">
+                                <div class="form-floating">
+                                    <input class="form-control" id="author" type="text" placeholder="이름을 입력하세요" data-sb-validations="required" />
+                                    <label for="author">이름</label>
+                                    <div class="invalid-feedback" data-sb-feedback="author:required">작성자 이름을 입력해 주세요.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="subject" type="text" placeholder="제목을 입력하세요" data-sb-validations="required" />
+                                    <label for="subject">제목</label>
+                                    <div class="invalid-feedback" data-sb-feedback="subject:required">제목을 입력해 주세요.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="article" placeholder="본문을 입력하세요" style="height: 12rem" data-sb-validations="required"></textarea>
+                                    <label for="article">본문</label>
+                                    <div class="invalid-feedback" data-sb-feedback="article:required">본문을 입력해 주세요.</div>
+                                </div>
+                                <br />
+                                <!-- Submit Button-->
+                                <button class="btn btn-primary text-uppercase" id="submitButton" onclick="send()">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <th:block th:replace="~{fragments :: footer_fragment}"></th:block>
+        <th:block th:replace="~{fragments :: script_fragment}"></th:block>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            function send() {
+                axios.post('/addpost', {
+                    author: document.getElementById('author').value,
+                    subject: document.getElementById('subject').value,
+                    article: document.getElementById('article').value,
+                })
+                .then(function (response) { console.log(response); })
+                .catch(function (error) { console.log(error); });
+            }
+        </script>
+    </body>
+</html>
